@@ -1,11 +1,11 @@
 /* ================= НАСТРОЙКА ПАЛИТРЫ И ПЕРЕМЕННЫХ ================= */
 :root {
-    --plum: #3B1C32;            /* Тёмный сливовый — фон страницы */
-    --mint: #A4D4B4;            /* Мятно-зеленый — колонки и рамки */
-    --raspberry: #CA054D;       /* Малиново-красный — акценты, кнопки */
-    --peach: #FFCF9C;           /* Персиковый — карточки текущих задач */
+    --plum: #3B1C32;      
+    --mint: #A4D4B4;          
+    --raspberry: #CA054D;      
+    --peach: #FFCF9C;           
     --white: #FFFFFF;
-    --dark-muted: #2d1425;
+    --dark-muted: #2d1425;      
 }
 
 * {
@@ -33,14 +33,16 @@ body {
     gap: 25px;
 }
 
+/* Простое строгое название по твоему запросу */
 header h1 {
-    font-size: 32px;
-    color: var(--mint);
+    font-size: 36px;
+    color: var(--white);
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    border-bottom: 2px solid var(--mint);
+    letter-spacing: 2px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
     padding-bottom: 10px;
     text-align: center;
+    font-weight: 800;
 }
 
 /* Верхняя горизонтальная форма */
@@ -50,7 +52,7 @@ header h1 {
     background: var(--dark-muted);
     padding: 20px;
     border-radius: 12px;
-    border: 2px solid var(--mint);
+    border: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 .form-inputs {
@@ -62,7 +64,7 @@ header h1 {
 input, select, button {
     padding: 12px 14px;
     border-radius: 8px;
-    border: 2px solid var(--mint);
+    border: 2px solid rgba(255, 255, 255, 0.2);
     background: var(--plum);
     color: var(--white);
     font-size: 14px;
@@ -71,9 +73,10 @@ input, select, button {
     transition: all 0.2s;
 }
 
+/* При фокусе инпуты подсвечиваются Малиновым */
 input:focus, select:focus {
-    border-color: var(--peach);
-    box-shadow: 0 0 8px rgba(255, 207, 156, 0.4);
+    border-color: var(--raspberry);
+    box-shadow: 0 0 8px rgba(202, 5, 77, 0.4);
 }
 
 input[type="text"] {
@@ -81,10 +84,10 @@ input[type="text"] {
 }
 
 input[type="text"]::placeholder {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.4);
 }
 
-/* Яркая малиновая кнопка добавления */
+
 .btn-main {
     background-color: var(--raspberry);
     color: var(--white);
@@ -93,6 +96,7 @@ input[type="text"]::placeholder {
     border: none;
     cursor: pointer;
     white-space: nowrap;
+    padding: 0 25px;
 }
 
 .btn-main:hover {
@@ -100,7 +104,7 @@ input[type="text"]::placeholder {
     transform: translateY(-1px);
 }
 
-/* Панель поиска и фильтров */
+/* Панель поиска */
 .controls-panel {
     display: flex;
     gap: 15px;
@@ -111,7 +115,7 @@ input[type="text"]::placeholder {
     flex: 1;
 }
 
-/* ================= КАНБАН-ДОСКА СЕТКА ================= */
+/* ================= KANBAN GRID ================= */
 .kanban-board {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -119,43 +123,61 @@ input[type="text"]::placeholder {
     align-items: start;
 }
 
-/* Две колонки */
 .kanban-column {
     background: var(--dark-muted);
     border-radius: 14px;
     padding: 20px;
-    border: 2px solid var(--mint);
     min-height: 450px;
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
+/* ЛЕВАЯ КОЛОНКА: В работе */
+.kanban-column.active-column {
+    border: 2px solid var(--mint);
+}
+.kanban-column.active-column .column-header h2 {
+    color: var(--mint);
+}
+.kanban-column.active-column .task-count {
+    background: var(--mint);
+    color: var(--plum);
+}
+
+/* ПРАВАЯ КОЛОНКА: Выполненные */
+.kanban-column.completed-column {
+    border: 2px solid var(--peach);
+}
+.kanban-column.completed-column .column-header h2 {
+    color: var(--peach);
+}
+.kanban-column.completed-column .task-count {
+    background: var(--peach);
+    color: var(--plum);
+}
+
 .column-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid var(--mint);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
     padding-bottom: 12px;
 }
 
 .column-header h2 {
     font-size: 20px;
-    color: var(--mint);
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
 .task-count {
-    background: var(--mint);
-    color: var(--plum);
     padding: 2px 10px;
     border-radius: 12px;
     font-size: 14px;
     font-weight: bold;
 }
 
-/* Списки для задач */
 .todo-list {
     list-style: none;
     display: flex;
@@ -165,11 +187,21 @@ input[type="text"]::placeholder {
     height: 100%;
 }
 
-/* Карточка задачи — Персиковая */
+/* Карточки внутри левой колонки "В работе" */
+.active-column .todo-item {
+    background: rgba(164, 212, 180, 0.1);
+    border: 2px solid var(--mint);
+    color: var(--white);
+}
+
+/* Карточки внутри правой колонки "Выполненные" */
+.completed-column .todo-item {
+    background: rgba(255, 207, 156, 0.1);
+    border: 2px solid var(--peach);
+    color: var(--peach);
+}
+
 .todo-item {
-    background: var(--peach);
-    color: var(--plum);
-    border: 2px solid var(--plum);
     padding: 15px;
     border-radius: 10px;
     display: flex;
@@ -178,17 +210,15 @@ input[type="text"]::placeholder {
     gap: 15px;
     cursor: grab;
     transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .todo-item:active {
     cursor: grabbing;
 }
 
-/* Анимация перетаскивания */
 .todo-item.dragging {
-    opacity: 0.3;
-    border: 2px dashed var(--mint);
+    opacity: 0.2;
+    border: 2px dashed var(--white);
     background: transparent;
 }
 
@@ -218,30 +248,33 @@ input[type="text"]::placeholder {
     font-size: 16px;
 }
 
-.todo-date {
+.active-column .todo-date {
     font-size: 12px;
+    color: var(--mint);
     font-weight: 600;
     opacity: 0.8;
 }
 
-/* Оформление правой колонки «Выполненные» */
-.kanban-column.completed-column .todo-item {
-    background: rgba(164, 212, 180, 0.2); /* Приглушенная мята */
-    border-color: var(--mint);
-    color: var(--mint);
-    box-shadow: none;
+.completed-column .todo-date {
+    font-size: 12px;
+    color: var(--peach);
+    font-weight: 600;
+    opacity: 0.6;
 }
 
-.kanban-column.completed-column .todo-text {
+.completed-column .todo-text {
     text-decoration: line-through;
     opacity: 0.7;
 }
 
-.kanban-column.completed-column .todo-date {
-    opacity: 0.5;
+/* Инвертируем цвета эмодзи-кнопок, чтобы они подстраивались под цвет текста в колонках */
+.active-column .btn-icon {
+    filter: brightness(0) invert(1) sepia(1) saturate(3) hue-rotate(90deg);
+}
+.completed-column .btn-icon {
+    filter: brightness(0) invert(1) sepia(1) saturate(2) hue-rotate(0deg);
 }
 
-/* Иконки кнопок */
 .actions-row {
     display: flex;
     gap: 5px;
@@ -258,14 +291,10 @@ input[type="text"]::placeholder {
 }
 
 .btn-icon:hover {
-    background: rgba(0, 0, 0, 0.1);
-}
-
-.kanban-column.completed-column .btn-icon:hover {
     background: rgba(255, 255, 255, 0.1);
 }
 
-/* Поля инлайн-редактирования внутри карточки */
+/* Редактирование */
 .edit-container {
     display: flex;
     flex-direction: column;
@@ -281,7 +310,6 @@ input[type="text"]::placeholder {
     border-radius: 6px;
 }
 
-/* Адаптивность под телефоны */
 @media (max-width: 768px) {
     .kanban-board {
         grid-template-columns: 1fr;
